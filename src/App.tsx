@@ -1,3 +1,13 @@
+import { DockLauncher } from "./components/DockLauncher";
+import { Header } from "./components/Header";
+
 export const App = () => {
-  return <h1 className="bg-slate-600">Test 2</h1>;
+  return (
+    <div className="flex flex-col bg-green-100 w-screen h-screen">
+      <Header />
+      <div className="grow">
+        <DockLauncher />
+      </div>
+    </div>
+  );
 };

@@ -22,6 +22,10 @@ module.exports = {
         include: path.resolve(__dirname, "..", "./src"),
         use: ["style-loader", "css-loader", "postcss-loader"],
       },
+      {
+        test: /\.(png|svg)$/,
+        type: "asset/resource",
+      },
     ],
   },
   output: {
