@@ -5,7 +5,14 @@ module.exports = {
   ],
   darkMode: "media",
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "dark-navy": "#0b1627",
+      },
+      backgroundImage: {
+        "default-static": "url('/public/bg.svg')",
+      },
+    },
   },
   variants: {
     extend: {},
