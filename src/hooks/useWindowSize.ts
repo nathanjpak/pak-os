@@ -1,21 +1,21 @@
-import { useEffect, useState } from "react";
+import { MutableRefObject, useEffect, useState } from "react";
 
-export interface IWindowSize {
+export interface IComponentSize {
   width: number | undefined;
   height: number | undefined;
 }
 
-const useWindowSize = () => {
-  const [windowSize, setWindowSize] = useState<IWindowSize>({
+const useComponentSize = (refContainer: MutableRefObject<any>) => {
+  const [componentSize, setComponentSize] = useState<IComponentSize>({
     width: undefined,
     height: undefined,
   });
 
   useEffect(() => {
     const handleResize = () => {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
+      setComponentSize({
+        width: refContainer.current.offsetWidth,
+        height: refContainer.current.offsetHeight,
       });
     };
 
@@ -24,9 +24,9 @@ const useWindowSize = () => {
     handleResize();
 
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [refContainer]);
 
-  return windowSize;
+  return componentSize;
 };
 
-export default useWindowSize;
+export default useComponentSize;
