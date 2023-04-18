@@ -23,8 +23,8 @@ module.exports = {
         use: ["style-loader", "css-loader", "postcss-loader"],
       },
       {
-        test: /\.(png|svg)$/,
-        type: "asset/resource",
+        test: /\.svg$/,
+        type: "asset/inline",
       },
     ],
   },
