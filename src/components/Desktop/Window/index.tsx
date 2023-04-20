@@ -5,6 +5,10 @@ export const Window = ({ fileName }: { fileName: string }) => {
   const parentWidth = parent.innerWidth;
   const parentHeight = parent.innerHeight;
 
+  // const dotIndex = fileName.lastIndexOf(".");
+  // // This does not account for folder with . in the name
+  // const fileType = (dotIndex > -1) ?  : "folder";
+
   return (
     <Rnd
       default={{ x: 0, y: 0, height: parentHeight / 2, width: parentWidth / 2 }}
@@ -12,7 +16,7 @@ export const Window = ({ fileName }: { fileName: string }) => {
       dragHandleClassName="handle"
       className="bg-white rounded-t"
     >
-      <WindowHandle />
+      <WindowHandle fileName={fileName} />
       Draggable {fileName}
     </Rnd>
   );
