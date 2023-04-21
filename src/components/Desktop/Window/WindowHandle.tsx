@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import WindowsContext from "../../../contexts/windowsContext";
 
 interface IWindowHandleProps {
   fileName: string;
@@ -9,6 +10,8 @@ export const WindowHandle = ({ fileName }: IWindowHandleProps) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   const toggleIsFullScreen = () => setIsFullScreen(!isFullScreen);
+
+  const { removeOpenedWindow } = useContext(WindowsContext);
 
   return (
     <div className={classNameString}>
@@ -23,7 +26,10 @@ export const WindowHandle = ({ fileName }: IWindowHandleProps) => {
         >
           {isFullScreen ? "\u29c9" : "\u2610"}
         </button>
-        <button className="bg-red-400 rounded-full w-6 h-6 hover:bg-red-300">
+        <button
+          className="bg-red-400 rounded-full w-6 h-6 hover:bg-red-300"
+          onClick={() => removeOpenedWindow(fileName)}
+        >
           {"\u2715"}
         </button>
       </div>
