@@ -16,7 +16,8 @@ export const DesktopIcon = ({ svg, fileName }: DesktopIconProps) => {
   const bgColor = isSelected ? "bg-emerald-400/50" : "hover:bg-white/50";
   const containerClassName = `flex flex-col pt-2 h-[120px] w-[120px] justify-start rounded ${bgColor}`;
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setIsSelected(!isSelected);
     addOpenedWindow(fileName);
   };

@@ -7,7 +7,8 @@ import { Window } from "./Window";
 import DesktopSizeContext from "../../contexts/desktopSizeContext";
 
 export const Desktop = () => {
-  const { openedWindows } = useContext(WindowsContext);
+  const { openedWindows, focusWindow, setFocusWindow } =
+    useContext(WindowsContext);
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -28,6 +29,10 @@ export const Desktop = () => {
     window.addEventListener("resize", onResize);
   }, []);
 
+  const handleClick = () => {
+    if (focusWindow) setFocusWindow(null);
+  };
+
   return (
     <div
       ref={ref}
@@ -36,6 +41,7 @@ export const Desktop = () => {
         gridTemplateColumns: `repeat(auto-fill, 120px)`,
         gridTemplateRows: `repeat(auto-fill, 120px)`,
       }}
+      onClick={handleClick}
     >
       <DesktopSizeContext.Provider value={size}>
         <DesktopIcon fileName="Resume.pdf" svg={PDFIcon} />

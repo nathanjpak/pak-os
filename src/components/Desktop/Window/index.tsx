@@ -3,6 +3,7 @@ import { WindowHandle } from "./WindowHandle";
 import { useContext, useState } from "react";
 import DesktopSizeContext from "../../../contexts/desktopSizeContext";
 import { IWindow } from "../../../App";
+import WindowsContext from "../../../contexts/windowsContext";
 
 export type Dimension = {
   width: number;
@@ -11,6 +12,8 @@ export type Dimension = {
 
 export const Window = ({ window }: { window: IWindow }) => {
   const parentSize = useContext(DesktopSizeContext);
+  const { focusWindow, setFocusWindow } = useContext(WindowsContext);
+  const isFocused = focusWindow === window.fileName;
 
   const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
   const [size, setSize] = useState<Dimension>({
@@ -28,7 +31,13 @@ export const Window = ({ window }: { window: IWindow }) => {
     setPosition(pos);
   };
 
-  const focusClassString = window.focused ? "z-10" : "z-0";
+  const focusClassString = isFocused ? "z-10" : "z-0";
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isFocused) return;
+    setFocusWindow(window.fileName);
+  };
 
   return (
     <Rnd
@@ -60,9 +69,11 @@ export const Window = ({ window }: { window: IWindow }) => {
       bounds="parent"
       dragHandleClassName="handle"
       className={`bg-white rounded-t drop-shadow-md ${focusClassString}`}
+      onClick={handleClick}
     >
       <WindowHandle
         window={window}
+        isFocused={isFocused}
         setPosition={setPosition}
         setSize={setSize}
         windowSize={size}

@@ -6,7 +6,6 @@ import WindowsContext from "./contexts/windowsContext";
 
 export interface IWindow {
   fileName: string;
-  focused: boolean;
 }
 
 export const App = () => {
@@ -14,12 +13,14 @@ export const App = () => {
     new Map<string, IWindow>()
   );
 
+  const [focusWindow, setFocusWindow] = useState<string | null>(null);
+
   const addOpenedWindow = (fileName: string) => {
     if (!openedWindows.has(fileName)) {
       const newMap = new Map(openedWindows);
-      newMap.forEach((window) => (window.focused = false));
-      newMap.set(fileName, { fileName: fileName, focused: true });
+      newMap.set(fileName, { fileName: fileName });
       setOpenedWindows(newMap);
+      setFocusWindow(fileName);
     }
   };
 
@@ -27,6 +28,7 @@ export const App = () => {
     const newMap = new Map(openedWindows);
     newMap.delete(fileName);
     setOpenedWindows(newMap);
+    if (focusWindow === fileName) setFocusWindow(null);
   };
 
   return (
@@ -34,9 +36,11 @@ export const App = () => {
       <WindowsContext.Provider
         value={{
           openedWindows,
+          focusWindow,
           setOpenedWindows,
           addOpenedWindow,
           removeOpenedWindow,
+          setFocusWindow,
         }}
       >
         <Header />

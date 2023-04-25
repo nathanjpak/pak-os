@@ -7,6 +7,7 @@ import { IWindow } from "../../../App";
 
 interface IWindowHandleProps {
   window: IWindow;
+  isFocused: boolean;
   setPosition: Dispatch<SetStateAction<Position>>;
   setSize: Dispatch<SetStateAction<Dimension>>;
   windowSize: Dimension;
@@ -15,6 +16,7 @@ interface IWindowHandleProps {
 
 export const WindowHandle = ({
   window,
+  isFocused,
   setPosition,
   setSize,
   windowSize,
@@ -26,9 +28,9 @@ export const WindowHandle = ({
   const [prevPos, setPrevPos] = useState<Position | undefined>(undefined);
 
   const borderClassString = isFullScreen ? "" : "rounded-t";
-  const focusClassString = window.focused ? "" : "opacity-70";
+  const focusClassString = isFocused ? "" : "opacity-70";
 
-  const closeButtonClassString = window.focused
+  const closeButtonClassString = isFocused
     ? "bg-red-400 hover:bg-red-300"
     : "bg-stone-400 hover:bg-stone-300";
 
@@ -64,7 +66,7 @@ export const WindowHandle = ({
 
   return (
     <div
-      className={`handle relative align-middle text-center py-1 bg-dark-navy text-slate-50 ${borderClassString} ${focusClassString}`}
+      className={`handle select-none relative align-middle text-center py-1 bg-dark-navy text-slate-50 ${borderClassString} ${focusClassString}`}
     >
       {`${parentSize.width} : ${parentSize.height}`}
       <div className="absolute end-1 top-px">
