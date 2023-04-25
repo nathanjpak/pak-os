@@ -40,8 +40,8 @@ export const Desktop = () => {
       <DesktopSizeContext.Provider value={size}>
         <DesktopIcon fileName="Resume.pdf" svg={PDFIcon} />
         <DesktopIcon fileName="Projects" svg={FolderIcon} />
-        {openedWindows.map((fileName: string) => {
-          return <Window fileName={fileName} />;
+        {Array.from(openedWindows, (v) => v[1]).map((window) => {
+          return <Window key={window.fileName} fileName={window.fileName} />;
         })}
       </DesktopSizeContext.Provider>
     </div>

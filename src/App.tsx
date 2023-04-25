@@ -4,20 +4,29 @@ import { DockLauncher } from "./components/DockLauncher";
 import { Header } from "./components/Header";
 import WindowsContext from "./contexts/windowsContext";
 
+export interface IWindow {
+  fileName: string;
+  focused: boolean;
+}
+
 export const App = () => {
-  const [openedWindows, setOpenedWindows] = useState<string[]>([]);
+  const [openedWindows, setOpenedWindows] = useState<Map<string, IWindow>>(
+    new Map<string, IWindow>()
+  );
 
   const addOpenedWindow = (fileName: string) => {
-    if (!openedWindows.includes(fileName)) {
-      const newArray = [...openedWindows];
-      newArray.push(fileName);
-      setOpenedWindows(newArray);
+    if (!openedWindows.has(fileName)) {
+      const newMap = new Map(openedWindows);
+      newMap.forEach((window) => (window.focused = false));
+      newMap.set(fileName, { fileName: fileName, focused: true });
+      setOpenedWindows(newMap);
     }
   };
 
-  const removeOpenedWindow = (id: string) => {
-    const newArray = openedWindows.filter((val) => val !== id);
-    setOpenedWindows(newArray);
+  const removeOpenedWindow = (fileName: string) => {
+    const newMap = new Map(openedWindows);
+    newMap.delete(fileName);
+    setOpenedWindows(newMap);
   };
 
   return (
