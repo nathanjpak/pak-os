@@ -1,6 +1,7 @@
 import { Position, Rnd, RndResizeCallback } from "react-rnd";
 import { WindowHandle } from "./WindowHandle";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import DesktopSizeContext from "../../../contexts/desktopSizeContext";
 
 export type Dimension = {
   width: number;
@@ -8,13 +9,12 @@ export type Dimension = {
 };
 
 export const Window = ({ fileName }: { fileName: string }) => {
-  const parentWidth = parent.innerWidth;
-  const parentHeight = parent.innerHeight;
+  const parentSize = useContext(DesktopSizeContext);
 
   const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
   const [size, setSize] = useState<Dimension>({
-    width: parentWidth / 2,
-    height: parentHeight / 2,
+    width: parentSize.width / 2,
+    height: parentSize.height / 2,
   });
 
   const handleResize: RndResizeCallback = (e, dir, ref, delta, pos) => {
@@ -54,8 +54,8 @@ export const Window = ({ fileName }: { fileName: string }) => {
         });
       }}
       onResizeStop={handleResize}
-      maxWidth={parentWidth}
-      maxHeight={parentHeight}
+      maxWidth={parentSize.width}
+      maxHeight={parentSize.height}
       bounds="parent"
       dragHandleClassName="handle"
       className="bg-white rounded-t"
@@ -64,8 +64,8 @@ export const Window = ({ fileName }: { fileName: string }) => {
         fileName={fileName}
         setPosition={setPosition}
         setSize={setSize}
-        parentWidth={parentWidth}
-        parentHeight={parentHeight}
+        windowSize={size}
+        windowPosition={position}
       />
       Draggable {fileName}
       <p>
@@ -73,6 +73,9 @@ export const Window = ({ fileName }: { fileName: string }) => {
       </p>
       <p>
         {size.width}, {size.height}
+      </p>
+      <p>
+        Context: {parentSize.width}, {parentSize.height}
       </p>
     </Rnd>
   );
