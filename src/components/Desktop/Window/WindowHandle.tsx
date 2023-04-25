@@ -3,9 +3,10 @@ import WindowsContext from "../../../contexts/windowsContext";
 import { Position } from "react-rnd";
 import { Dimension } from ".";
 import DesktopSizeContext from "../../../contexts/desktopSizeContext";
+import { IWindow } from "../../../App";
 
 interface IWindowHandleProps {
-  fileName: string;
+  window: IWindow;
   setPosition: Dispatch<SetStateAction<Position>>;
   setSize: Dispatch<SetStateAction<Dimension>>;
   windowSize: Dimension;
@@ -13,7 +14,7 @@ interface IWindowHandleProps {
 }
 
 export const WindowHandle = ({
-  fileName,
+  window,
   setPosition,
   setSize,
   windowSize,
@@ -25,7 +26,11 @@ export const WindowHandle = ({
   const [prevPos, setPrevPos] = useState<Position | undefined>(undefined);
 
   const borderClassString = isFullScreen ? "" : "rounded-t";
-  const classNameString = `handle relative align-middle text-center py-1 bg-dark-navy text-slate-50 ${borderClassString}`;
+  const focusClassString = window.focused ? "" : "opacity-70";
+
+  const closeButtonClassString = window.focused
+    ? "bg-red-400 hover:bg-red-300"
+    : "bg-stone-400 hover:bg-stone-300";
 
   const { removeOpenedWindow } = useContext(WindowsContext);
 
@@ -58,7 +63,9 @@ export const WindowHandle = ({
   };
 
   return (
-    <div className={classNameString}>
+    <div
+      className={`handle relative align-middle text-center py-1 bg-dark-navy text-slate-50 ${borderClassString} ${focusClassString}`}
+    >
       {`${parentSize.width} : ${parentSize.height}`}
       <div className="absolute end-1 top-px">
         <button className="rounded-full w-6 h-6 hover:bg-white/50">
@@ -71,8 +78,8 @@ export const WindowHandle = ({
           {isFullScreen ? "\u29c9" : "\u2610"}
         </button>
         <button
-          className="bg-red-400 rounded-full w-6 h-6 hover:bg-red-300"
-          onClick={() => removeOpenedWindow(fileName)}
+          className={`rounded-full w-6 h-6 ${closeButtonClassString}`}
+          onClick={() => removeOpenedWindow(window.fileName)}
         >
           {"\u2715"}
         </button>

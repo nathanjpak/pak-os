@@ -2,13 +2,14 @@ import { Position, Rnd, RndResizeCallback } from "react-rnd";
 import { WindowHandle } from "./WindowHandle";
 import { useContext, useState } from "react";
 import DesktopSizeContext from "../../../contexts/desktopSizeContext";
+import { IWindow } from "../../../App";
 
 export type Dimension = {
   width: number;
   height: number;
 };
 
-export const Window = ({ fileName }: { fileName: string }) => {
+export const Window = ({ window }: { window: IWindow }) => {
   const parentSize = useContext(DesktopSizeContext);
 
   const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
@@ -27,9 +28,7 @@ export const Window = ({ fileName }: { fileName: string }) => {
     setPosition(pos);
   };
 
-  // const dotIndex = fileName.lastIndexOf(".");
-  // // This does not account for folder with . in the name
-  // const fileType = (dotIndex > -1) ?  : "folder";
+  const focusClassString = window.focused ? "z-10" : "z-0";
 
   return (
     <Rnd
@@ -60,16 +59,16 @@ export const Window = ({ fileName }: { fileName: string }) => {
       maxHeight={parentSize.height}
       bounds="parent"
       dragHandleClassName="handle"
-      className="bg-white rounded-t"
+      className={`bg-white rounded-t drop-shadow-md ${focusClassString}`}
     >
       <WindowHandle
-        fileName={fileName}
+        window={window}
         setPosition={setPosition}
         setSize={setSize}
         windowSize={size}
         windowPosition={position}
       />
-      Draggable {fileName}
+      Draggable {window.fileName}
       <p>
         {position.x}, {position.y}
       </p>
