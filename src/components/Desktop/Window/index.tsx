@@ -54,6 +54,8 @@ export const Window = ({ fileName }: { fileName: string }) => {
         });
       }}
       onResizeStop={handleResize}
+      minWidth={200}
+      minHeight={300}
       maxWidth={parentSize.width}
       maxHeight={parentSize.height}
       bounds="parent"
