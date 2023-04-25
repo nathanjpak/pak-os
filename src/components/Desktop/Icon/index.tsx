@@ -7,6 +7,8 @@ interface DesktopIconProps {
   fileName: string;
 }
 
+// TODO: figure out what to do with touch screens
+
 export const DesktopIcon = ({ svg, fileName }: DesktopIconProps) => {
   const ref = useRef(null);
   const [isSelected, setIsSelected] = useState(false);
@@ -19,13 +21,27 @@ export const DesktopIcon = ({ svg, fileName }: DesktopIconProps) => {
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsSelected(!isSelected);
+  };
+
+  const handleDoubleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    addOpenedWindow(fileName);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
     addOpenedWindow(fileName);
   };
 
   useClickDetect(ref, () => setIsSelected(false), isSelected);
 
   return (
-    <div onClick={handleClick} className={containerClassName} ref={ref}>
+    <div
+      onClick={handleClick}
+      onDoubleClick={handleDoubleClick}
+      onTouchEnd={handleTouchEnd}
+      className={containerClassName}
+      ref={ref}
+    >
       <img className="self-center" src={svg} height={"40px"} width={"40px"} />
       <div className="text-center">{fileName}</div>
     </div>

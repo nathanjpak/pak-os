@@ -20,8 +20,8 @@ export const App = () => {
       const newMap = new Map(openedWindows);
       newMap.set(fileName, { fileName: fileName });
       setOpenedWindows(newMap);
-      setFocusWindow(fileName);
     }
+    setFocusWindow(fileName);
   };
 
   const removeOpenedWindow = (fileName: string) => {
