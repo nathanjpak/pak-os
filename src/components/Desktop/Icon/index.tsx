@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useRef, useState } from "react";
 import useClickDetect from "../../../hooks/useClickDetect";
 import WindowsContext from "../../../contexts/windowsContext";
 
@@ -6,15 +6,21 @@ interface DesktopIconProps {
   svg: string;
   fileName: string;
   path?: string[];
+  rootFileName?: string;
 }
 
 // TODO: figure out what to do with touch screens
 
-export const DesktopIcon = ({ svg, fileName, path }: DesktopIconProps) => {
+export const DesktopIcon = ({
+  svg,
+  fileName,
+  path,
+  rootFileName,
+}: DesktopIconProps) => {
   const ref = useRef(null);
   const [isSelected, setIsSelected] = useState(false);
 
-  const { addOpenedWindow } = useContext(WindowsContext);
+  const { addOpenedWindow, updateWindowPath } = useContext(WindowsContext);
 
   const bgColor = isSelected ? "bg-emerald-400/50" : "hover:bg-white/50";
   const containerClassName = `flex flex-col pt-2 h-[120px] w-[120px] justify-start rounded ${bgColor}`;
@@ -26,10 +32,15 @@ export const DesktopIcon = ({ svg, fileName, path }: DesktopIconProps) => {
 
   const handleDoubleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    addOpenedWindow(fileName, path);
+    openWindow();
   };
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
+  const openWindow = () => {
+    if (!fileName.includes(".") && path) {
+      console.log("Should open same window");
+      updateWindowPath(rootFileName!, [...path]);
+      return;
+    }
     addOpenedWindow(fileName, path);
   };
 
@@ -39,7 +50,7 @@ export const DesktopIcon = ({ svg, fileName, path }: DesktopIconProps) => {
     <div
       onClick={handleClick}
       onDoubleClick={handleDoubleClick}
-      onTouchEnd={handleTouchEnd}
+      onTouchEnd={openWindow}
       className={containerClassName}
       ref={ref}
     >

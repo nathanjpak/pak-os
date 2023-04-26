@@ -7,6 +7,7 @@ interface IWindowsContext {
   setOpenedWindows: React.Dispatch<SetStateAction<any>>;
   addOpenedWindow: (fileName: string, path?: string[]) => void;
   removeOpenedWindow: (fileName: string) => void;
+  updateWindowPath: (fileName: string, path?: string[]) => void;
   setFocusWindow: React.Dispatch<SetStateAction<string | null>>;
 }
 
@@ -16,6 +17,7 @@ const WindowsContext = createContext<IWindowsContext>({
   setOpenedWindows: () => {},
   addOpenedWindow: () => {},
   removeOpenedWindow: () => {},
+  updateWindowPath: () => {},
   setFocusWindow: () => {},
 });
 

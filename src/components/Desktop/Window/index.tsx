@@ -80,9 +80,7 @@ export const Window = ({ window }: { window: IWindow }) => {
         windowSize={size}
         windowPosition={position}
       />
-      {window.fileType === "folder" && (
-        <FolderViewer folderName={window.fileName} rootPath={window.path} />
-      )}
+      {window.fileType === "folder" && <FolderViewer window={window} />}
       {window.fileType !== "folder" && <p>Url will go here</p>}
     </Rnd>
   );

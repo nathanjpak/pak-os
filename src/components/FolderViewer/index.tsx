@@ -5,33 +5,33 @@ import fileSystemContext, {
   IFileSystem,
 } from "../../contexts/fileSystemContext";
 import { DesktopIcon } from "../Desktop/Icon";
+import { IWindow } from "../../App";
 
 interface IFolderViewerProps {
-  rootPath: string[];
-  folderName: string;
+  window: IWindow;
 }
 
 // TODO: traverse folders rather than open new ones
 
-export const FolderViewer = ({ folderName, rootPath }: IFolderViewerProps) => {
+export const FolderViewer = ({ window }: IFolderViewerProps) => {
   const Files = useContext(fileSystemContext);
-  const [path, setPath] = useState(rootPath);
+
+  const path = window.path;
   let [folder, setFolder] = useState<IFileSystem | string>(Files);
 
   useEffect(() => {
     const updateFolder = async () => {
-      let newFolder = folder;
+      let newFolder: IFileSystem | string = Files;
       for (let level = 0; level < path.length; level++) {
         if (typeof newFolder !== "string") {
           newFolder = newFolder[path[level]];
         }
       }
-      console.log("newFolder", newFolder);
       setFolder(newFolder);
     };
 
     updateFolder();
-  }, [path]);
+  }, [window]);
 
   return (
     <div
@@ -48,7 +48,8 @@ export const FolderViewer = ({ folderName, rootPath }: IFolderViewerProps) => {
             key={file}
             fileName={file}
             svg={isFolder ? FolderIcon : PDFIcon}
-            path={path}
+            path={[...path, file]}
+            rootFileName={window.fileName}
           />
         );
       })}

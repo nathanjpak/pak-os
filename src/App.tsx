@@ -34,6 +34,24 @@ export const App = () => {
     setFocusWindow(fileName);
   };
 
+  const updateWindowPath = (fileName: string, path: string[] = []) => {
+    const newMap = new Map(openedWindows);
+    const currentWindow = openedWindows.get(fileName);
+    console.log("currentWindow", currentWindow);
+
+    if (currentWindow) {
+      const updatedWindow: IWindow = {
+        ...currentWindow,
+        nameString: path[path.length - 1],
+        path: path,
+      };
+      console.log("udpatedWindow:", updatedWindow);
+      newMap.set(fileName, updatedWindow);
+    }
+    console.log(newMap);
+    setOpenedWindows(newMap);
+  };
+
   const removeOpenedWindow = (fileName: string) => {
     const newMap = new Map(openedWindows);
     newMap.delete(fileName);
@@ -50,6 +68,7 @@ export const App = () => {
           setOpenedWindows,
           addOpenedWindow,
           removeOpenedWindow,
+          updateWindowPath,
           setFocusWindow,
         }}
       >
