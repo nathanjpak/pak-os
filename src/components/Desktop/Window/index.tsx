@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import DesktopSizeContext from "../../../contexts/desktopSizeContext";
 import { IWindow } from "../../../App";
 import WindowsContext from "../../../contexts/windowsContext";
+import { FolderViewer } from "../../FolderViewer";
 
 export type Dimension = {
   width: number;
@@ -68,7 +69,7 @@ export const Window = ({ window }: { window: IWindow }) => {
       maxHeight={parentSize.height}
       bounds="parent"
       dragHandleClassName="handle"
-      className={`bg-white rounded-t drop-shadow-md ${focusClassString}`}
+      className={`bg-white rounded-t drop-shadow-md !flex flex-col ${focusClassString}`}
       onClick={handleClick}
     >
       <WindowHandle
@@ -79,16 +80,10 @@ export const Window = ({ window }: { window: IWindow }) => {
         windowSize={size}
         windowPosition={position}
       />
-      Draggable {window.fileName}
-      <p>
-        {position.x}, {position.y}
-      </p>
-      <p>
-        {size.width}, {size.height}
-      </p>
-      <p>
-        Context: {parentSize.width}, {parentSize.height}
-      </p>
+      {window.fileType === "folder" && (
+        <FolderViewer folderName={window.fileName} rootPath={window.path} />
+      )}
+      {window.fileType !== "folder" && <p>Url will go here</p>}
     </Rnd>
   );
 };

@@ -5,11 +5,12 @@ import WindowsContext from "../../../contexts/windowsContext";
 interface DesktopIconProps {
   svg: string;
   fileName: string;
+  path?: string[];
 }
 
 // TODO: figure out what to do with touch screens
 
-export const DesktopIcon = ({ svg, fileName }: DesktopIconProps) => {
+export const DesktopIcon = ({ svg, fileName, path }: DesktopIconProps) => {
   const ref = useRef(null);
   const [isSelected, setIsSelected] = useState(false);
 
@@ -25,11 +26,11 @@ export const DesktopIcon = ({ svg, fileName }: DesktopIconProps) => {
 
   const handleDoubleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    addOpenedWindow(fileName);
+    addOpenedWindow(fileName, path);
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    addOpenedWindow(fileName);
+    addOpenedWindow(fileName, path);
   };
 
   useClickDetect(ref, () => setIsSelected(false), isSelected);

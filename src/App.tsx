@@ -6,6 +6,9 @@ import WindowsContext from "./contexts/windowsContext";
 
 export interface IWindow {
   fileName: string;
+  nameString: string;
+  fileType: string;
+  path: string[];
 }
 
 export const App = () => {
@@ -15,10 +18,17 @@ export const App = () => {
 
   const [focusWindow, setFocusWindow] = useState<string | null>(null);
 
-  const addOpenedWindow = (fileName: string) => {
+  const addOpenedWindow = (fileName: string, path: string[] = []) => {
     if (!openedWindows.has(fileName)) {
       const newMap = new Map(openedWindows);
-      newMap.set(fileName, { fileName: fileName });
+      let [nameString, fileType] = fileName.split(".");
+      if (!fileType) fileType = "folder";
+      newMap.set(fileName, {
+        fileName,
+        nameString,
+        fileType,
+        path: [...path, fileName],
+      });
       setOpenedWindows(newMap);
     }
     setFocusWindow(fileName);

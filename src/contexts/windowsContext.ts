@@ -5,7 +5,7 @@ interface IWindowsContext {
   openedWindows: Map<string, IWindow>;
   focusWindow: string | null;
   setOpenedWindows: React.Dispatch<SetStateAction<any>>;
-  addOpenedWindow: (fileName: string) => void;
+  addOpenedWindow: (fileName: string, path?: string[]) => void;
   removeOpenedWindow: (fileName: string) => void;
   setFocusWindow: React.Dispatch<SetStateAction<string | null>>;
 }

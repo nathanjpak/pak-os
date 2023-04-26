@@ -5,6 +5,9 @@ import { useContext, useEffect, useRef, useState } from "react";
 import WindowsContext from "../../contexts/windowsContext";
 import { Window } from "./Window";
 import DesktopSizeContext from "../../contexts/desktopSizeContext";
+import fileSystemContext from "../../contexts/fileSystemContext";
+
+import Files from "../../files";
 
 export const Desktop = () => {
   const { openedWindows, focusWindow, setFocusWindow } =
@@ -44,11 +47,21 @@ export const Desktop = () => {
       onClick={handleClick}
     >
       <DesktopSizeContext.Provider value={size}>
-        <DesktopIcon fileName="Resume.pdf" svg={PDFIcon} />
-        <DesktopIcon fileName="Projects" svg={FolderIcon} />
-        {Array.from(openedWindows, (v) => v[1]).map((window) => {
-          return <Window key={window.fileName} window={window} />;
+        {Object.keys(Files).map((file) => {
+          const isFolder = !file.includes(".");
+          return (
+            <DesktopIcon
+              key={file}
+              fileName={file}
+              svg={isFolder ? FolderIcon : PDFIcon}
+            />
+          );
         })}
+        <fileSystemContext.Provider value={Files}>
+          {Array.from(openedWindows, (v) => v[1]).map((window) => {
+            return <Window key={window.fileName} window={window} />;
+          })}
+        </fileSystemContext.Provider>
       </DesktopSizeContext.Provider>
     </div>
   );
