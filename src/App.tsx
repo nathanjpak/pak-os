@@ -9,6 +9,8 @@ export interface IWindow {
   nameString: string;
   fileType: string;
   path: string[];
+  history: string[][];
+  future: string[][];
 }
 
 export const App = () => {
@@ -28,6 +30,8 @@ export const App = () => {
         nameString,
         fileType,
         path: [...path, fileName],
+        history: [],
+        future: [],
       });
       setOpenedWindows(newMap);
     }
@@ -36,19 +40,46 @@ export const App = () => {
 
   const updateWindowPath = (fileName: string, path: string[] = []) => {
     const newMap = new Map(openedWindows);
-    const currentWindow = openedWindows.get(fileName);
-    console.log("currentWindow", currentWindow);
+    const currentWindow = newMap.get(fileName);
 
     if (currentWindow) {
       const updatedWindow: IWindow = {
         ...currentWindow,
         nameString: path[path.length - 1],
         path: path,
+        history: [...currentWindow.history, currentWindow.path],
       };
-      console.log("udpatedWindow:", updatedWindow);
       newMap.set(fileName, updatedWindow);
     }
-    console.log(newMap);
+
+    setOpenedWindows(newMap);
+  };
+
+  const updateWindowHistory = (fileName: string, isGoingForward: boolean) => {
+    const newMap = new Map(openedWindows);
+    const currentWindow = newMap.get(fileName);
+
+    if (currentWindow) {
+      const destination = isGoingForward
+        ? currentWindow.future.pop()
+        : currentWindow.history.pop();
+
+      currentWindow.nameString = destination![destination!.length - 1];
+      if (isGoingForward) {
+        currentWindow.history = [...currentWindow.history, currentWindow.path];
+      } else {
+        currentWindow.future = [...currentWindow.future, currentWindow.path];
+      }
+      currentWindow.path = destination!;
+      console.log("destination", destination);
+      console.log("history", currentWindow.history);
+      console.log("future", currentWindow.future);
+      console.log("current", currentWindow.path);
+      console.log("fileName", currentWindow.fileName);
+      console.log("nameString", currentWindow.nameString);
+      console.log("updatedWindow", currentWindow);
+    }
+
     setOpenedWindows(newMap);
   };
 
@@ -69,6 +100,7 @@ export const App = () => {
           addOpenedWindow,
           removeOpenedWindow,
           updateWindowPath,
+          updateWindowHistory,
           setFocusWindow,
         }}
       >

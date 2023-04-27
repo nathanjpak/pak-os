@@ -20,6 +20,7 @@ export const FolderViewer = ({ window }: IFolderViewerProps) => {
   let [folder, setFolder] = useState<IFileSystem | string>(Files);
 
   useEffect(() => {
+    console.log("Folder re-rendered");
     const updateFolder = async () => {
       let newFolder: IFileSystem | string = Files;
       for (let level = 0; level < path.length; level++) {
@@ -31,7 +32,7 @@ export const FolderViewer = ({ window }: IFolderViewerProps) => {
     };
 
     updateFolder();
-  }, [window]);
+  }, [path]);
 
   return (
     <div

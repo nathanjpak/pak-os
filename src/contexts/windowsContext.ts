@@ -8,6 +8,7 @@ interface IWindowsContext {
   addOpenedWindow: (fileName: string, path?: string[]) => void;
   removeOpenedWindow: (fileName: string) => void;
   updateWindowPath: (fileName: string, path?: string[]) => void;
+  updateWindowHistory: (fileName: string, isGoingForward: boolean) => void;
   setFocusWindow: React.Dispatch<SetStateAction<string | null>>;
 }
 
@@ -18,6 +19,7 @@ const WindowsContext = createContext<IWindowsContext>({
   addOpenedWindow: () => {},
   removeOpenedWindow: () => {},
   updateWindowPath: () => {},
+  updateWindowHistory: () => {},
   setFocusWindow: () => {},
 });
 

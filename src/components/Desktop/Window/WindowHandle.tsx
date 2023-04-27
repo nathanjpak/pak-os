@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import WindowsContext from "../../../contexts/windowsContext";
 import { Position } from "react-rnd";
 import { Dimension } from ".";
@@ -27,6 +33,8 @@ export const WindowHandle = ({
   const [prevSize, setPrevSize] = useState<Dimension | undefined>(undefined);
   const [prevPos, setPrevPos] = useState<Position | undefined>(undefined);
 
+  const isFolder = window.fileType === "folder";
+
   const borderClassString = isFullScreen ? "" : "rounded-t";
   const focusClassString = isFocused ? "" : "opacity-70";
 
@@ -34,7 +42,8 @@ export const WindowHandle = ({
     ? "bg-red-400 hover:bg-red-300"
     : "bg-stone-400 hover:bg-stone-300";
 
-  const { removeOpenedWindow } = useContext(WindowsContext);
+  const { removeOpenedWindow, updateWindowHistory } =
+    useContext(WindowsContext);
 
   const toggleIsFullScreen = () => setIsFullScreen(!isFullScreen);
 
@@ -68,7 +77,25 @@ export const WindowHandle = ({
     <div
       className={`handle select-none relative align-middle text-center py-1 bg-dark-navy text-slate-50 ${borderClassString} ${focusClassString}`}
     >
-      {`${parentSize.width} : ${parentSize.height}`}
+      {isFolder && (
+        <div className="absolute start-1 top-px">
+          <button
+            className="rounded w-6 h-6 hover:bg-white/50"
+            onClick={() => updateWindowHistory(window.fileName, false)}
+            disabled={window.history.length < 1}
+          >
+            {"\u02c2"}
+          </button>
+          <button
+            className="m-1 rounded w-6 h-6 hover:bg-white/50"
+            onClick={() => updateWindowHistory(window.fileName, true)}
+            disabled={window.future.length < 1}
+          >
+            {"\u02c3"}
+          </button>
+        </div>
+      )}
+      {window.nameString}
       <div className="absolute end-1 top-px">
         <button className="rounded-full w-6 h-6 hover:bg-white/50">
           {"\u005f"}
