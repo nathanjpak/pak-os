@@ -73,6 +73,9 @@ export const WindowHandle = ({
     }
   };
 
+  const backButtonDisabled = window.history.length < 1;
+  const forwardButtonDisabled = window.future.length < 1;
+
   return (
     <div
       className={`handle select-none relative align-middle text-center py-1 bg-dark-navy text-slate-50 ${borderClassString} ${focusClassString}`}
@@ -80,16 +83,24 @@ export const WindowHandle = ({
       {isFolder && (
         <div className="absolute start-1 top-px">
           <button
-            className="rounded w-6 h-6 hover:bg-white/50"
+            className={
+              backButtonDisabled
+                ? "rounded w-6 h-6"
+                : "rounded w-6 h-6 hover:bg-white/50"
+            }
             onClick={() => updateWindowHistory(window.fileName, false)}
-            disabled={window.history.length < 1}
+            disabled={backButtonDisabled}
           >
             {"\u02c2"}
           </button>
           <button
-            className="m-1 rounded w-6 h-6 hover:bg-white/50"
+            className={
+              forwardButtonDisabled
+                ? "m-1 rounded w-6 h-6"
+                : "m-1 rounded w-6 h-6 hover:bg-white/50"
+            }
             onClick={() => updateWindowHistory(window.fileName, true)}
-            disabled={window.future.length < 1}
+            disabled={forwardButtonDisabled}
           >
             {"\u02c3"}
           </button>
