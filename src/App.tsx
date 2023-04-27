@@ -48,6 +48,7 @@ export const App = () => {
         nameString: path[path.length - 1],
         path: path,
         history: [...currentWindow.history, currentWindow.path],
+        future: [],
       };
       newMap.set(fileName, updatedWindow);
     }
