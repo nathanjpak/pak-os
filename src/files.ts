@@ -13,12 +13,12 @@ const files = {
     "Test-folder-2": {
       "Test-folder-3": {
         "Test-folder-4": {
-          "End.md": "fileurl",
+          "End.md": "files/End.md",
         },
       },
     },
   },
-  "Contact.md": "fileurl",
+  "Contact.md": "files/Contact.md",
 };
 
 export default files;

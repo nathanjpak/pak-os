@@ -3,6 +3,11 @@ declare module "*.svg" {
   export default src;
 }
 
+declare module "*.pdf" {
+  const src: string;
+  export default src;
+}
+
 declare module "*.md" {
   const src: string;
   export default src;

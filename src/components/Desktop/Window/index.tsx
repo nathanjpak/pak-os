@@ -6,6 +6,7 @@ import { IWindow } from "../../../App";
 import WindowsContext from "../../../contexts/windowsContext";
 import { FolderViewer } from "../../FolderViewer";
 import { PDFViewer } from "../../PDFViewer";
+import MDViewer from "../../MDViewer";
 
 export type Dimension = {
   width: number;
@@ -91,6 +92,7 @@ export const Window = ({ window }: { window: IWindow }) => {
       {window.fileType === "pdf" && (
         <PDFViewer fileName={window.fileName} windowSize={size} />
       )}
+      {window.fileType === "md" && <MDViewer path={window.path} />}
     </Rnd>
   );
 };
