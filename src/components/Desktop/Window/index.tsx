@@ -5,6 +5,7 @@ import DesktopSizeContext from "../../../contexts/desktopSizeContext";
 import { IWindow } from "../../../App";
 import WindowsContext from "../../../contexts/windowsContext";
 import { FolderViewer } from "../../FolderViewer";
+import { PDFViewer } from "../../PDFViewer";
 
 export type Dimension = {
   width: number;
@@ -81,7 +82,7 @@ export const Window = ({ window }: { window: IWindow }) => {
         windowPosition={position}
       />
       {window.fileType === "folder" && <FolderViewer window={window} />}
-      {window.fileType !== "folder" && <p>Url will go here</p>}
+      {window.fileType === "pdf" && <PDFViewer fileName={window.fileName} />}
     </Rnd>
   );
 };
