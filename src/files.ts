@@ -4,8 +4,13 @@ const files = {
   },
   Projects: {
     MathLibz: {
-      "MathLibz.html": "link",
-      "Source-Code.html": "link",
+      "MathLibz.html": "https://www.mathlibz.com",
+      "Source-Code.link": "https://www.github.com/nathanjpak/mathlib",
+      "README.md": "fileurl",
+    },
+    Momble: {
+      "Momble.html": "https://momble.onrender.com/",
+      "Source-Code.link": "https://www.github.com/nathanjpak/momble",
       "README.md": "fileurl",
     },
   },

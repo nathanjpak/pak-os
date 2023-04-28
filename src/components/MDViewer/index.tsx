@@ -15,14 +15,12 @@ const MDViewer = ({ path }: IMDViewerProps) => {
   const errorMD = "## There was an error in displaying the markdown file.";
 
   useEffect(() => {
-    console.log("path", path);
     let fileLocation: IFileSystem | string = Files;
     console.log(Files);
     for (let level = 0; level < path.length; level++) {
       if (typeof fileLocation !== "string")
         fileLocation = fileLocation[path[level]];
     }
-    console.log("fileLocation", fileLocation);
 
     const updateContent = async (fileLocation: string) => {
       await fetch(fileLocation)
