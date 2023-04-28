@@ -14,10 +14,16 @@ export type Dimension = {
 
 export const Window = ({ window }: { window: IWindow }) => {
   const parentSize = useContext(DesktopSizeContext);
-  const { focusWindow, setFocusWindow } = useContext(WindowsContext);
+  const { openedWindows, focusWindow, setFocusWindow } =
+    useContext(WindowsContext);
   const isFocused = focusWindow === window.fileName;
 
-  const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
+  const initialPosition: Position = {
+    x: Math.min(20 * openedWindows.size, parentSize.width / 2),
+    y: Math.min(20 * openedWindows.size, parentSize.height / 2),
+  };
+
+  const [position, setPosition] = useState<Position>(initialPosition);
   const [size, setSize] = useState<Dimension>({
     width: parentSize.width / 2,
     height: parentSize.height / 2,
