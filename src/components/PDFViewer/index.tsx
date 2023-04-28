@@ -47,7 +47,7 @@ export const PDFViewer = ({ fileName, windowSize }: IPDFViewerProps) => {
           <Page
             pageIndex={0}
             className="drop-shadow-md"
-            renderMode="svg"
+            renderMode="canvas"
             renderTextLayer={false}
             renderAnnotationLayer={false}
             onLoadSuccess={handleLoadSuccess}
