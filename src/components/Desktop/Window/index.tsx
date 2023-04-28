@@ -88,7 +88,9 @@ export const Window = ({ window }: { window: IWindow }) => {
         windowPosition={position}
       />
       {window.fileType === "folder" && <FolderViewer window={window} />}
-      {window.fileType === "pdf" && <PDFViewer fileName={window.fileName} />}
+      {window.fileType === "pdf" && (
+        <PDFViewer fileName={window.fileName} windowSize={size} />
+      )}
     </Rnd>
   );
 };
