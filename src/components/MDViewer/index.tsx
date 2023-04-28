@@ -38,7 +38,7 @@ const MDViewer = ({ path }: IMDViewerProps) => {
   }, []);
 
   return (
-    <div>
+    <div className="p-6 overflow-auto w-full h-full">
       <ReactMarkdown className="markdown" children={content} />
     </div>
   );
