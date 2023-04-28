@@ -12,14 +12,21 @@ export const PDFViewer = ({ fileName }: IPDFViewerProps) => {
 
   if (fileName === "Resume.pdf")
     return (
-      <div className="flex justify-center w-full h-full overflow-auto">
+      <div className="flex p-4 justify-center w-full h-full overflow-auto">
         <Document file={pdfMap[fileName]}>
           <Page
             pageIndex={0}
+            className="drop-shadow-md"
+            renderMode="svg"
             renderTextLayer={false}
             renderAnnotationLayer={false}
           ></Page>
         </Document>
       </div>
     );
+  return (
+    <div className="flex p-4 justify-center w-full h-full overflow-auto">
+      Could not find file with that name!
+    </div>
+  );
 };
