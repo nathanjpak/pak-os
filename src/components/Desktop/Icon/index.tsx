@@ -1,21 +1,33 @@
-import { Dispatch, SetStateAction, useContext, useRef, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  lazy,
+  useContext,
+  useRef,
+  useState,
+} from "react";
 import useClickDetect from "../../../hooks/useClickDetect";
 import WindowsContext from "../../../contexts/windowsContext";
 
 interface DesktopIconProps {
-  svg: string;
   fileName: string;
   path?: string[];
   rootFileName?: string;
+  fileType: string;
 }
 
 // TODO: figure out what to do with touch screens
 
+const FolderIcon = lazy(() => import("../../../icons/FolderIcon"));
+const LinkIcon = lazy(() => import("../../../icons/LinkIcon"));
+const MdIcon = lazy(() => import("../../../icons/MDIcon"));
+const PdfIcon = lazy(() => import("../../../icons/PDFIcon"));
+
 export const DesktopIcon = ({
-  svg,
   fileName,
   path,
   rootFileName,
+  fileType,
 }: DesktopIconProps) => {
   const ref = useRef(null);
   const [isSelected, setIsSelected] = useState(false);
@@ -54,7 +66,11 @@ export const DesktopIcon = ({
       className={containerClassName}
       ref={ref}
     >
-      <img className="self-center" src={svg} height={"40px"} width={"40px"} />
+      {/* <img className="self-center" src={svg} height={"40px"} width={"40px"} /> */}
+      {fileType === "folder" && <FolderIcon />}
+      {fileType === "link" && <LinkIcon />}
+      {fileType === "md" && <MdIcon />}
+      {fileType === "pdf" && <PdfIcon />}
       <div className="text-center">{fileName}</div>
     </div>
   );

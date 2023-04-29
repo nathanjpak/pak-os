@@ -1,5 +1,3 @@
-import PDFIcon from "../../../public/icons/pdf.svg";
-import FolderIcon from "../../../public/icons/folder.svg";
 import { DesktopIcon } from "./Icon";
 import { useContext, useEffect, useRef, useState } from "react";
 import WindowsContext from "../../contexts/windowsContext";
@@ -48,12 +46,11 @@ export const Desktop = () => {
     >
       <DesktopSizeContext.Provider value={size}>
         {Object.keys(Files).map((file) => {
-          const isFolder = !file.includes(".");
           return (
             <DesktopIcon
               key={file}
               fileName={file}
-              svg={isFolder ? FolderIcon : PDFIcon}
+              fileType={file.split(".")[1] || "folder"}
             />
           );
         })}

@@ -42,14 +42,13 @@ export const FolderViewer = ({ window }: IFolderViewerProps) => {
       }}
     >
       {Object.keys(folder).map((file) => {
-        const isFolder = !file.includes(".");
         return (
           <DesktopIcon
             key={file}
             fileName={file}
-            svg={isFolder ? FolderIcon : PDFIcon}
             path={[...path, file]}
             rootFileName={window.fileName}
+            fileType={file.split(".")[1] || "folder"}
           />
         );
       })}
