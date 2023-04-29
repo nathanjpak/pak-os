@@ -19,6 +19,7 @@ interface DesktopIconProps {
 // TODO: figure out what to do with touch screens
 
 const FolderIcon = lazy(() => import("../../../icons/FolderIcon"));
+const HtmlIcon = lazy(() => import("../../../icons/HTMLIcon"));
 const LinkIcon = lazy(() => import("../../../icons/LinkIcon"));
 const MdIcon = lazy(() => import("../../../icons/MDIcon"));
 const PdfIcon = lazy(() => import("../../../icons/PDFIcon"));
@@ -68,6 +69,7 @@ export const DesktopIcon = ({
     >
       {/* <img className="self-center" src={svg} height={"40px"} width={"40px"} /> */}
       {fileType === "folder" && <FolderIcon />}
+      {fileType === "html" && <HtmlIcon />}
       {fileType === "link" && <LinkIcon />}
       {fileType === "md" && <MdIcon />}
       {fileType === "pdf" && <PdfIcon />}
