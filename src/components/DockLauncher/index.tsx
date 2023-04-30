@@ -1,11 +1,33 @@
+import { useContext, useEffect, useState } from "react";
+import WindowsContext from "../../contexts/windowsContext";
+import DockIcon from "./Icon";
+
 export const DockLauncher = () => {
+  const { openedWindows } = useContext(WindowsContext);
+  const [activeFileTypes, setActiveFileTypes] = useState<[string, number][]>([
+    ["folder", 0],
+  ]);
+
+  useEffect(() => {
+    const activeFileTypesMap = new Map<string, number>();
+    activeFileTypesMap.set("folder", 0);
+    openedWindows.forEach((window) => {
+      activeFileTypesMap.set(
+        window.fileType,
+        (activeFileTypesMap.get(window.fileType) ?? 0) + 1
+      );
+    });
+    const newArray = Array.from(activeFileTypesMap);
+    setActiveFileTypes(newArray);
+  }, [openedWindows]);
+
   return (
-    <div className="flex flex-col bg-dark-navy bg-opacity-50 justify-between h-full w-fit">
-      <div className="flex flex-col">
-        <button>App 1</button>
-        <button>App 2</button>
+    <div className="flex flex-col bg-dark-navy bg-opacity-50 justify-start h-full w-fit p-1">
+      <div className="flex flex-col gap-2">
+        {activeFileTypes?.map((array) => (
+          <DockIcon key={array[0]} fileType={array[0]} count={array[1]} />
+        ))}
       </div>
-      <div>All Apps</div>
     </div>
   );
 };

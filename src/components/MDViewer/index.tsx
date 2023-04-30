@@ -27,7 +27,6 @@ const MDViewer = ({ path }: IMDViewerProps) => {
         .then((response) => response.text())
         .then((text) => {
           setContent(text);
-          console.log(text);
         })
         .catch(() => setContent(errorMD));
     };
