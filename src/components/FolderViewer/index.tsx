@@ -1,5 +1,3 @@
-import PDFIcon from "../../../public/icons/pdf.svg";
-import FolderIcon from "../../../public/icons/folder.svg";
 import { useContext, useEffect, useState } from "react";
 import fileSystemContext, {
   IFileSystem,
@@ -11,8 +9,6 @@ interface IFolderViewerProps {
   window: IWindow;
 }
 
-// TODO: traverse folders rather than open new ones
-
 export const FolderViewer = ({ window }: IFolderViewerProps) => {
   const Files = useContext(fileSystemContext);
 
@@ -20,14 +16,15 @@ export const FolderViewer = ({ window }: IFolderViewerProps) => {
   let [folder, setFolder] = useState<IFileSystem | string>(Files);
 
   useEffect(() => {
-    const updateFolder = async () => {
+    const updateFolder = () => {
       let newFolder: IFileSystem | string = Files;
       for (let level = 0; level < path.length; level++) {
         if (typeof newFolder !== "string") {
+          if (path[level] === "") continue;
           newFolder = newFolder[path[level]];
         }
       }
-      setFolder(newFolder);
+      if (newFolder) setFolder(newFolder);
     };
 
     updateFolder();

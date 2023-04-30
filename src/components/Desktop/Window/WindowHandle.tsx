@@ -106,7 +106,7 @@ export const WindowHandle = ({
           </button>
         </div>
       )}
-      {window.nameString}
+      {window.nameString || "Desktop"}
       <div className="absolute end-1 top-px">
         <button
           className="rounded-full w-6 h-6 hover:bg-white/50"
