@@ -56,6 +56,7 @@ export const Desktop = () => {
         })}
         <fileSystemContext.Provider value={Files}>
           {Array.from(openedWindows, (v) => v[1]).map((window) => {
+            if (window.hidden) return;
             return <Window key={window.fileName} window={window} />;
           })}
         </fileSystemContext.Provider>

@@ -42,7 +42,7 @@ export const WindowHandle = ({
     ? "bg-red-400 hover:bg-red-300"
     : "bg-stone-400 hover:bg-stone-300";
 
-  const { removeOpenedWindow, updateWindowHistory } =
+  const { removeOpenedWindow, updateWindowHistory, toggleHidden } =
     useContext(WindowsContext);
 
   const toggleIsFullScreen = () => setIsFullScreen(!isFullScreen);
@@ -108,7 +108,10 @@ export const WindowHandle = ({
       )}
       {window.nameString}
       <div className="absolute end-1 top-px">
-        <button className="rounded-full w-6 h-6 hover:bg-white/50">
+        <button
+          className="rounded-full w-6 h-6 hover:bg-white/50"
+          onClick={() => toggleHidden(window.fileName)}
+        >
           {"\u005f"}
         </button>
         <button

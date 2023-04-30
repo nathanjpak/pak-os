@@ -11,6 +11,7 @@ export interface IWindow {
   path: string[];
   history: string[][];
   future: string[][];
+  hidden: boolean;
 }
 
 export const App = () => {
@@ -32,8 +33,11 @@ export const App = () => {
         path: [...path, fileName],
         history: [],
         future: [],
+        hidden: false,
       });
       setOpenedWindows(newMap);
+    } else {
+      toggleHidden(fileName);
     }
     setFocusWindow(fileName);
   };
@@ -72,13 +76,6 @@ export const App = () => {
         currentWindow.future = [...currentWindow.future, currentWindow.path];
       }
       currentWindow.path = destination!;
-      console.log("destination", destination);
-      console.log("history", currentWindow.history);
-      console.log("future", currentWindow.future);
-      console.log("current", currentWindow.path);
-      console.log("fileName", currentWindow.fileName);
-      console.log("nameString", currentWindow.nameString);
-      console.log("updatedWindow", currentWindow);
     }
 
     setOpenedWindows(newMap);
@@ -89,6 +86,15 @@ export const App = () => {
     newMap.delete(fileName);
     setOpenedWindows(newMap);
     if (focusWindow === fileName) setFocusWindow(null);
+  };
+
+  const toggleHidden = (fileName: string) => {
+    const newMap = new Map(openedWindows);
+    const windowToUpdate = newMap.get(fileName);
+    windowToUpdate!.hidden = !windowToUpdate!.hidden;
+    setOpenedWindows(newMap);
+    if (!windowToUpdate!.hidden && focusWindow === fileName)
+      setFocusWindow(null);
   };
 
   return (
@@ -103,6 +109,7 @@ export const App = () => {
           updateWindowPath,
           updateWindowHistory,
           setFocusWindow,
+          toggleHidden,
         }}
       >
         <Header />

@@ -10,6 +10,7 @@ interface IWindowsContext {
   updateWindowPath: (fileName: string, path?: string[]) => void;
   updateWindowHistory: (fileName: string, isGoingForward: boolean) => void;
   setFocusWindow: React.Dispatch<SetStateAction<string | null>>;
+  toggleHidden: (fileName: string) => void;
 }
 
 const WindowsContext = createContext<IWindowsContext>({
@@ -21,6 +22,7 @@ const WindowsContext = createContext<IWindowsContext>({
   updateWindowPath: () => {},
   updateWindowHistory: () => {},
   setFocusWindow: () => {},
+  toggleHidden: () => {},
 });
 
 export default WindowsContext;
