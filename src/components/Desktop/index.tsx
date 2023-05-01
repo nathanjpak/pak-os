@@ -5,11 +5,11 @@ import { Window } from "./Window";
 import DesktopSizeContext from "../../contexts/desktopSizeContext";
 import fileSystemContext from "../../contexts/fileSystemContext";
 
-import Files from "../../files";
-
 export const Desktop = () => {
   const { openedWindows, focusWindow, setFocusWindow } =
     useContext(WindowsContext);
+
+  const Files = useContext(fileSystemContext);
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -54,12 +54,10 @@ export const Desktop = () => {
             />
           );
         })}
-        <fileSystemContext.Provider value={Files}>
-          {Array.from(openedWindows, (v) => v[1]).map((window) => {
-            if (window.hidden) return;
-            return <Window key={window.fileName} window={window} />;
-          })}
-        </fileSystemContext.Provider>
+        {Array.from(openedWindows, (v) => v[1]).map((window) => {
+          if (window.hidden) return;
+          return <Window key={window.fileName} window={window} />;
+        })}
       </DesktopSizeContext.Provider>
     </div>
   );

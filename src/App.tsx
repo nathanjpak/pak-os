@@ -3,6 +3,9 @@ import { Desktop } from "./components/Desktop";
 import { DockLauncher } from "./components/DockLauncher";
 import { Header } from "./components/Header";
 import WindowsContext from "./contexts/windowsContext";
+import fileSystemContext from "./contexts/fileSystemContext";
+
+import Files from "./files";
 
 export interface IWindow {
   fileName: string;
@@ -37,7 +40,8 @@ export const App = () => {
       });
       setOpenedWindows(newMap);
     } else {
-      toggleHidden(fileName);
+      const window = openedWindows.get(fileName);
+      if (window!.hidden) toggleHidden(fileName);
     }
     setFocusWindow(fileName);
   };
@@ -114,8 +118,10 @@ export const App = () => {
       >
         <Header />
         <div className="grow flex">
-          <DockLauncher />
-          <Desktop />
+          <fileSystemContext.Provider value={Files}>
+            <DockLauncher />
+            <Desktop />
+          </fileSystemContext.Provider>
         </div>
       </WindowsContext.Provider>
     </div>
