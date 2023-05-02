@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { IWindow } from "../../../App";
 import ClickDetectWrapper from "../../../utils/CreateDetectWrapper";
+import DockPreviewButton from "./Button";
 // import PreviewWindow from "./Window";
 
 interface IDockPreviewProps {
@@ -47,12 +48,7 @@ const DockPreview = ({
       >
         {windows.map((window) => {
           return (
-            <button
-              key={window.fileName}
-              className="text-center w-full p-2 hover:bg-slate-400"
-            >
-              {window.nameString}
-            </button>
+            <DockPreviewButton window={window} closePreview={closePreview} />
           );
         })}
       </div>
