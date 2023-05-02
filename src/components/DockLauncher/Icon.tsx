@@ -53,7 +53,11 @@ const DockIcon = ({ fileType, count }: IDockIconProps) => {
         {fileType === "pdf" && <PhotoViewerIcon />}
       </div>
       {!!previewWindows.length && (
-        <DockPreview windows={previewWindows} parentRef={iconRef} />
+        <DockPreview
+          windows={previewWindows}
+          parentRef={iconRef}
+          closePreview={() => setPreviewWindows([])}
+        />
       )}
     </>
   );

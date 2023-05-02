@@ -1,13 +1,19 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { IWindow } from "../../../App";
+import ClickDetectWrapper from "../../../utils/CreateDetectWrapper";
 // import PreviewWindow from "./Window";
 
 interface IDockPreviewProps {
   windows: IWindow[];
   parentRef: React.RefObject<HTMLDivElement>;
+  closePreview: () => void;
 }
 
-const DockPreview = ({ windows, parentRef }: IDockPreviewProps) => {
+const DockPreview = ({
+  windows,
+  parentRef,
+  closePreview,
+}: IDockPreviewProps) => {
   const [left, setLeft] = useState(66 + 8);
   const [top, setTop] = useState(0);
   const [triangleTop, setTriangleTop] = useState(0);
@@ -30,7 +36,7 @@ const DockPreview = ({ windows, parentRef }: IDockPreviewProps) => {
     "absolute w-0 h-0 border-[10px] border-transparent border-r-slate-200 border-l-0";
 
   return (
-    <>
+    <ClickDetectWrapper callback={closePreview}>
       <div
         className={triangleClassString}
         style={{ left: left - 10, top: triangleTop }}
@@ -50,7 +56,7 @@ const DockPreview = ({ windows, parentRef }: IDockPreviewProps) => {
           );
         })}
       </div>
-    </>
+    </ClickDetectWrapper>
   );
 };
 
