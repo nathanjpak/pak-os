@@ -43,8 +43,13 @@ const DockIcon = ({ fileType, count }: IDockIconProps) => {
         ref={iconRef}
       >
         <div className="flex flex-col h-full justify-center items-center w-1.5 gap-1">
-          {[...Array(Math.min(count, 3))].map(() => {
-            return <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />;
+          {[...Array(Math.min(count, 3))].map((v, index) => {
+            return (
+              <div
+                key={index}
+                className="w-1.5 h-1.5 rounded-full bg-blue-400"
+              />
+            );
           })}
         </div>
         {fileType === "html" && <BrowserIcon />}
