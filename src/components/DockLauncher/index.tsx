@@ -22,7 +22,7 @@ export const DockLauncher = () => {
   }, [openedWindows]);
 
   return (
-    <div className="flex flex-col bg-dark-navy bg-opacity-50 justify-start h-full sp-1">
+    <div className="flex flex-col bg-dark-navy bg-opacity-50 justify-start h-full sp-1 shrink-0">
       <div className="flex flex-col gap-2 relative h-full overflow-visible">
         {activeFileTypes?.map((array) => (
           <DockIcon key={array[0]} fileType={array[0]} count={array[1]} />
