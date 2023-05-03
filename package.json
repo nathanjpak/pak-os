@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/nathanjpak/pak-os#readme",
   "dependencies": {
+    "copy-webpack-plugin": "^11.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-markdown": "^8.0.7",
