@@ -6,7 +6,7 @@ import DesktopSizeContext from "../../contexts/desktopSizeContext";
 import fileSystemContext from "../../contexts/fileSystemContext";
 
 export const Desktop = () => {
-  const { openedWindows, focusWindow, setFocusWindow } =
+  const { openedWindows, focusWindow, setFocusWindow, removeOpenedWindow } =
     useContext(WindowsContext);
 
   const Files = useContext(fileSystemContext);
@@ -28,7 +28,21 @@ export const Desktop = () => {
   useEffect(() => {
     onResize();
     window.addEventListener("resize", onResize);
+
+    return () => window.removeEventListener("resize", onResize);
   }, []);
+
+  useEffect(() => {
+    if (!focusWindow) return;
+
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.shiftKey && e.key === "W") removeOpenedWindow(focusWindow);
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, [focusWindow]);
 
   const handleClick = () => {
     if (focusWindow) setFocusWindow(null);
