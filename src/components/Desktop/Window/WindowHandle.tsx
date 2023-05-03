@@ -89,6 +89,7 @@ export const WindowHandle = ({
                 : "rounded w-6 h-6 hover:bg-white/50"
             }
             onClick={() => updateWindowHistory(window.fileName, false)}
+            onTouchEnd={() => updateWindowHistory(window.fileName, false)}
             disabled={backButtonDisabled}
           >
             {"\u02c2"}
@@ -100,6 +101,7 @@ export const WindowHandle = ({
                 : "m-1 rounded w-6 h-6 hover:bg-white/50"
             }
             onClick={() => updateWindowHistory(window.fileName, true)}
+            onTouchEnd={() => updateWindowHistory(window.fileName, true)}
             disabled={forwardButtonDisabled}
           >
             {"\u02c3"}
@@ -111,18 +113,21 @@ export const WindowHandle = ({
         <button
           className="rounded-full w-6 h-6 hover:bg-white/50"
           onClick={() => toggleHidden(window.fileName)}
+          onTouchEnd={() => toggleHidden(window.fileName)}
         >
           {"\u005f"}
         </button>
         <button
           className="m-1 rounded-full w-6 h-6 hover:bg-white/50"
           onClick={handleResizeClick}
+          onTouchEnd={handleResizeClick}
         >
           {isFullScreen ? "\u29c9" : "\u2610"}
         </button>
         <button
           className={`rounded-full w-6 h-6 ${closeButtonClassString}`}
           onClick={() => removeOpenedWindow(window.fileName)}
+          onTouchEnd={() => removeOpenedWindow(window.fileName)}
         >
           {"\u2715"}
         </button>

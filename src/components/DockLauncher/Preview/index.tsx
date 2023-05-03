@@ -43,12 +43,16 @@ const DockPreview = ({
         style={{ left: left - 10, top: triangleTop }}
       ></div>
       <div
-        className={`absolute flex flex-col items-start justify-start py-4 bg-slate-200 rounded-lg w-[120px]`}
+        className={`absolute flex flex-col items-start justify-start py-4 bg-slate-200 rounded-lg w-[120px] z-20`}
         style={{ left: left, top: top }}
       >
         {windows.map((window) => {
           return (
-            <DockPreviewButton window={window} closePreview={closePreview} />
+            <DockPreviewButton
+              key={window.fileName}
+              window={window}
+              closePreview={closePreview}
+            />
           );
         })}
       </div>

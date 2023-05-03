@@ -20,7 +20,6 @@ const DockPreviewButton = ({
 
   return (
     <button
-      key={window.fileName}
       className="text-center w-full p-2 hover:bg-slate-400"
       onClick={handleClick}
     >
