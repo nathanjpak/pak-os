@@ -7,7 +7,7 @@ const Clock = () => {
   }, []);
 
   return (
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <div className="absolute top-1/2 right-[16px] sm:right-auto sm:left-1/2 sm:-translate-x-1/2 -translate-y-1/2">
       {dateState.toLocaleDateString("en-US", {
         day: "2-digit",
         month: "short",
