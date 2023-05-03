@@ -108,7 +108,7 @@ export const WindowHandle = ({
           </button>
         </div>
       )}
-      {window.nameString || "Desktop"}
+      {windowSize.width < 250 ? "\u2800" : window.nameString || "Desktop"}
       <div className="absolute end-1 top-px">
         <button
           className="rounded-full w-6 h-6 hover:bg-white/50"
