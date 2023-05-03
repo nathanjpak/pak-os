@@ -23,7 +23,7 @@ const DockPreviewButton = ({
       className="text-center w-full p-2 hover:bg-slate-400"
       onClick={handleClick}
     >
-      {window.nameString}
+      {window.nameString || "Desktop"}
     </button>
   );
 };
