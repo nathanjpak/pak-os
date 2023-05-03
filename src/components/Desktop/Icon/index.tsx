@@ -1,13 +1,9 @@
-import {
-  Dispatch,
-  SetStateAction,
-  lazy,
-  useContext,
-  useRef,
-  useState,
-} from "react";
+import { lazy, useContext, useRef, useState } from "react";
 import useClickDetect from "../../../hooks/useClickDetect";
 import WindowsContext from "../../../contexts/windowsContext";
+import fileSystemContext, {
+  IFileSystem,
+} from "../../../contexts/fileSystemContext";
 
 interface DesktopIconProps {
   fileName: string;
@@ -34,6 +30,7 @@ export const DesktopIcon = ({
   const [isSelected, setIsSelected] = useState(false);
 
   const { addOpenedWindow, updateWindowPath } = useContext(WindowsContext);
+  const Files = useContext(fileSystemContext);
 
   const bgColor = isSelected ? "bg-emerald-400/50" : "hover:bg-white/50";
   const containerClassName = `flex flex-col pt-2 h-[120px] w-[120px] justify-start rounded ${bgColor}`;
@@ -43,14 +40,26 @@ export const DesktopIcon = ({
     setIsSelected(!isSelected);
   };
 
-  const handleDoubleClick = (e: React.MouseEvent) => {
+  const handleDoubleClick = (e: React.MouseEvent | React.TouchEvent) => {
     e.stopPropagation();
-    openWindow();
+    fileType === "link" ? openUrl() : openWindow();
+  };
+
+  const openUrl = async () => {
+    let fileLocation: IFileSystem | string = Files;
+
+    for (let level = 0; level < path!.length; level++) {
+      if (typeof fileLocation !== "string") {
+        fileLocation = fileLocation[path![level]];
+      }
+    }
+
+    if (typeof fileLocation === "string")
+      window.open(fileLocation, "_blank", "noreferrer");
   };
 
   const openWindow = () => {
     if (!fileName.includes(".") && path) {
-      console.log("Should open same window");
       updateWindowPath(rootFileName!, [...path]);
       return;
     }
@@ -63,11 +72,10 @@ export const DesktopIcon = ({
     <div
       onClick={handleClick}
       onDoubleClick={handleDoubleClick}
-      onTouchEnd={openWindow}
+      onTouchEnd={(e) => handleDoubleClick(e)}
       className={containerClassName}
       ref={ref}
     >
-      {/* <img className="self-center" src={svg} height={"40px"} width={"40px"} /> */}
       {fileType === "folder" && <FolderIcon />}
       {fileType === "html" && <HtmlIcon />}
       {fileType === "link" && <LinkIcon />}

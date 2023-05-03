@@ -16,7 +16,6 @@ const MDViewer = ({ path }: IMDViewerProps) => {
 
   useEffect(() => {
     let fileLocation: IFileSystem | string = Files;
-    console.log(Files);
     for (let level = 0; level < path.length; level++) {
       if (typeof fileLocation !== "string")
         fileLocation = fileLocation[path[level]];
